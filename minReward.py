@@ -3,12 +3,21 @@
 #2. and the student must receive more rewards than an adjacent student with a lower exam score, and receive a lower reward than an adjacent student with higher score
 
 def minReward(scores):
-    reward = []
-    for i in range(len(scores)):
-        if scores[i]>scores[i+1]:
-            reward.append(1)
-    return reward
+    rewards = []
+    for x in range(len(scores)):
+        rewards.append(1)
 
+    for i in range(1, len(scores)):
+        j = i-1
+        if scores[i] > scores[j]:
+            rewards[i] = rewards[j]+1
+        else:
+            while j >= 0 and scores[j] > scores[j+1]:
+                rewards[j] = max(rewards[j], rewards[j+1]+1)
+                j -= 1
+    rewardSum = sum(rewards)
+    return f"The rewards array is: {rewards}, and the sum of the rewards are is: {rewardSum}"
+    
 print(minReward([8,4,2,1,3,6,7,9,5]))
 
 
